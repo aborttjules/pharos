@@ -1,0 +1,126 @@
+// This is your Prisma schema file for Pharos
+// Post-execution trade observation infrastructure
+// Run: npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ──────────────────────────────────────────────
+// Users
+// ──────────────────────────────────────────────
+model User {
+  id              String    @id @default(cuid())
+  telegramId      BigInt?   @unique
+  phantomAddress  String?
+  username        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  positions       Position[]
+  alerts          Alert[]
+  rules           AlertRule[]
+  auditLog        AuditLog[]
+}
+
+// ──────────────────────────────────────────────
+// Positions — unified schema across all 4 platforms
+// ──────────────────────────────────────────────
+model Position {
+  id               String          @id @default(cuid())
+  userId           String
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  platform         String          // jupiter | orca | raydium | marinade | manual
+  asset            String          // "SOL", "SOL-USDC LP", "mSOL", etc.
+  poolId           String?         // LP pool or program address
+
+  entryValueUsd    Float           // USD value at time of watch
+  currentValueUsd  Float           // Latest observed value
+  unrealizedPnlUsd Float           @default(0)
+  unrealizedPnlPct Float           @default(0)
+
+  stopLossPct      Float?          // user-defined stop, in %
+  takeProfitPct    Float?          // user-defined TP, in %
+
+  status           String          @default("active") // active|warning|critical|closed
+  lastCheckedAt    DateTime        @default(now())
+  createdAt        DateTime        @default(now())
+  closedAt         DateTime?
+
+  metadata         Json            @default("{}")
+
+  alerts           Alert[]
+  rules            AlertRule[]
+
+  @@index([userId, status])
+}
+
+// ──────────────────────────────────────────────
+// Alerts — fired by the agent
+// ──────────────────────────────────────────────
+model Alert {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  positionId     String
+  position       Position  @relation(fields: [positionId], references: [id], onDelete: Cascade)
+
+  alertType      String    // loss_warning|stop_breach|drift_detected|custom_rule|recovery
+  severity       String    // info|warning|critical
+  message        String
+  valueAtAlert   Float
+
+  sentVia        String[]  // telegram|dashboard|webhook|email
+  sentAt         DateTime  @default(now())
+  acknowledgedAt DateTime?
+
+  @@index([userId, sentAt])
+  @@index([positionId, sentAt])
+}
+
+// ──────────────────────────────────────────────
+// Alert Rules — user-defined conditions
+// ──────────────────────────────────────────────
+model AlertRule {
+  id               String    @id @default(cuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  positionId       String?   // null = applies to all positions
+  position         Position? @relation(fields: [positionId], references: [id], onDelete: Cascade)
+
+  ruleType         String    // price_drift|loss_threshold|value_below|value_above|lp_fee_drop|stake_reward_drop|custom
+  threshold        Float
+  operator         String    // > < >= <= ==
+  lookbackSecs     Int?
+  cooldownSecs     Int       @default(300)
+  enabled          Boolean   @default(true)
+  lastFiredAt      DateTime?
+
+  // AES-256 encrypted rule payload — server stores ciphertext only
+  encryptedPayload String?
+
+  createdAt        DateTime  @default(now())
+
+  @@index([userId, enabled])
+}
+
+// ──────────────────────────────────────────────
+// Audit Log — every agent action recorded
+// ──────────────────────────────────────────────
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  actor     String   // agent|user|telegram
+  action    String   // position_added|alert_fired|rule_created|position_polled|...
+  details   Json     @default("{}")
+  timestamp DateTime @default(now())
+
+  @@index([userId, timestamp])
+}
