@@ -147,7 +147,7 @@ export class PositionReconciler {
     if (existing?.status === 'closed') return 'closed';
     // 5% default threshold — alert zone starts here
     if (pnlPct <= -DEFAULT_LOSS_THRESHOLD_PCT * 2) return 'critical'; // -10% → critical
-    if (pnlPct <= -DEFAULT_LOSS_THRESHOLD_PCT) return 'warning';      // -5%  → warning
+    if (pnlPct <= -DEFAULT_LOSS_THRESHOLD_PCT) return 'warning';      // 5%  → warning
     return 'active';
   }
 }

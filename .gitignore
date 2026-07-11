@@ -32,3 +32,6 @@ yarn-error.log*
 # Ignore markdown docs except README files
 *.md
 !**/README.md
+
+claude-session.jsonl
+

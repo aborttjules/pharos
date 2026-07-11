@@ -1,7 +1,7 @@
 /**
  * Pharos — Drift Detector
  * Evaluates positions for loss risk at every poll cycle.
- * Default: alert when position is at or below -5% from entry cost.
+ * Default: alert when position is at or below 5% from entry cost.
  * User-defined rules can override this threshold.
  * Pharos is READ-ONLY — it only emits alerts, never acts.
  */
@@ -59,7 +59,7 @@ export class DriftDetector {
 
     if (Date.now() - lastFired < cooldownMs) return []; // cooldown active
 
-    // Warning: reached -5% (default threshold)
+    // Warning: reached 5% (default threshold)
     if (pos.unrealizedPnlPct <= -DEFAULT_LOSS_THRESHOLD_PCT && pos.unrealizedPnlPct > -DEFAULT_LOSS_THRESHOLD_PCT * 2) {
       alerts.push(this.buildAlert(pos, 'loss_warning', 'warning',
         `⚠️ ${pos.asset} on ${pos.platform.toUpperCase()} is down ${Math.abs(pos.unrealizedPnlPct).toFixed(1)}% from entry. ` +

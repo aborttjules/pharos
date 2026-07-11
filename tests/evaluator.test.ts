@@ -28,7 +28,7 @@ function testReconciler() {
   ];
   const reconciled2 = reconciler.reconcileJupiter('user1', rawJupDropped, storedWithSol);
   assert.strictEqual(reconciled2[0].unrealizedPnlPct, -5);
-  assert.strictEqual(reconciled2[0].status, 'warning'); // -5% default threshold
+  assert.strictEqual(reconciled2[0].status, 'warning'); // 5% default threshold
 
   const rawJupCritical = [
     { tokenMint: 'So11111111111111111111111111111111111111112', symbol: 'SOL', uiAmount: 10, priceUsd: 135, valueUsd: 1350 } // down 10%

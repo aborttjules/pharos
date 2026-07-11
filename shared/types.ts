@@ -186,7 +186,7 @@ export interface WsEvent<T = unknown> {
 // ──────────────────────────────────────────────
 // Constants
 // ──────────────────────────────────────────────
-export const DEFAULT_LOSS_THRESHOLD_PCT = 5;   // alert at -5% from entry
+export const DEFAULT_LOSS_THRESHOLD_PCT = 5;   // alert at 5% from entry
 export const POLL_INTERVAL_MS = 30_000;         // 30 seconds
 export const ALERT_COOLDOWN_DEFAULT_SECS = 300; // 5 minutes
 export const WATCHER_MODE_ONLY = true;          // compile-time constant — never execute
