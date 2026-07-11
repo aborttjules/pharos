@@ -1,4 +1,4 @@
-// This is your Prisma schema file for Pharos
+// This is the Prisma schema file for Pharos
 // Post-execution trade observation infrastructure
 // Run: npx prisma migrate dev --name init
 

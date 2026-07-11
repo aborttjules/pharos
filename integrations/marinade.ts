@@ -1,6 +1,6 @@
 /**
  * Pharos — Marinade Finance Integration
- * Reads mSOL (staked SOL) balance and estimates USD value. READ-ONLY.
+ * Reads mSOL (staked SOL) balance and estimates USD value. READ-ONLY
  */
 
 import { Connection, PublicKey } from '@solana/web3.js';

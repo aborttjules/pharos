@@ -9,9 +9,9 @@ use tokio::time::sleep;
 /// Pharos — Rust Wallet Position Poller
 ///
 /// Reads wallet token account balances from Solana RPC.
-/// Emits PositionSnapshot JSON to stdout (consumed by TypeScript agent).
+/// Emits PositionSnapshot JSON to stdout (consumed by TypeScript agent)
 ///
-/// WATCHER_MODE_ONLY = true — no transactions signed or submitted.
+/// WATCHER_MODE_ONLY = true — no transactions signed or submitted
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TokenBalance {

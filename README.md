@@ -35,12 +35,12 @@ Pharos's output is alerts, risk signals, and audit logs. It is infrastructure fo
 ### 1. Privacy-First Unified Dashboard
 - Aggregates live positions across all 4 platforms in one view
 - Shows entry value, current value, unrealized P&L, drift status
-- Color-coded status: ✅ Active | ⚠️ Warning (−5%) | 🛑 Critical (−10%)
+- Color-coded status: ✅ Active | ⚠️ Warning (5%) | 🛑 Critical (−10%)
 - Strategy intent (TP/SL targets) stays client-side — server never sees it
 - AES-256 encrypted rule payloads (server stores ciphertext only)
 
 ### 2. Smart Alerts + Telegram Bot
-- Default alert: ⚠️ when position falls **−5% from entry cost**, 🛑 at −10%
+- Default alert: ⚠️ when position falls **5% from entry cost**, 🛑 at −10%
 - User-overridable via custom rules
 - Telegram commands: `/watch`, `/show`, `/alerts`, `/rules`, `/audit`
 - Real-time WebSocket push to dashboard

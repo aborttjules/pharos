@@ -1,7 +1,7 @@
 /**
  * Pharos — Express REST API + WebSocket Server
- * Exposes position data, alerts, rules, and audit trail to the dashboard.
- * READ-ONLY infrastructure — no transaction signing or execution.
+ * Exposes position data, alerts, rules, and audit trail to the dashboard
+ * READ-ONLY infrastructure — no transaction signing or execution
  */
 
 import express from 'express';

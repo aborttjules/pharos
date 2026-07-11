@@ -1,7 +1,7 @@
 /**
  * Pharos — Telegram Bot
- * Command interface for trade observation.
- * All commands are READ-ONLY. Pharos never executes trades.
+ * Command interface for trade observation
+ * All commands are READ-ONLY. Pharos never executes trades
  *
  * Commands:
  *   /watch <platform> <asset> <entry_usd> [stop:<pct>]

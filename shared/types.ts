@@ -1,7 +1,7 @@
 /**
  * Pharos — Shared Type Definitions
  * Post-execution trade observation infrastructure.
- * Pharos NEVER signs, executes, or submits transactions.
+ * Pharos NEVER signs, executes, or submits transactions
  */
 
 // ──────────────────────────────────────────────

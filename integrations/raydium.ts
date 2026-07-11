@@ -1,6 +1,6 @@
 /**
  * Pharos — Raydium AMM v4 Integration
- * Reads LP token balances and estimates USD value. READ-ONLY. No signing.
+ * Reads LP token balances and estimates USD value. READ-ONLY. No signing
  */
 
 import { Connection, PublicKey } from '@solana/web3.js';

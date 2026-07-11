@@ -26,7 +26,7 @@ export class JitoSubmitter {
 
   /**
    * Compiles the user swap transaction and a Jito validator tip transaction into a bundle
-   * and dry-runs the bundle simulation on Jito Testnet.
+   * and dry-runs the bundle simulation on Jito Testnet
    */
   public async simulateJitoBundle(userTx: Transaction, signer: Keypair): Promise<void> {
     console.log(`[Jito Submitter] Structuring Jito bundle payload...`);
